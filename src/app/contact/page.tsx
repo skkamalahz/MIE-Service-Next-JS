@@ -276,7 +276,7 @@ const ContactPage = () => {
                 <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-1">
                   Send us a Message
                 </h2>
-                <p className="text-gray-600">We'll get back to you as soon as possible</p>
+                <p className="text-gray-600">We&apos;ll get back to you as soon as possible</p>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-6">
