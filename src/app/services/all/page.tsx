@@ -85,6 +85,18 @@ export default function AllServices() {
     }
   };
 
+  const iconVariants = {
+    initial: { scale: 1 },
+    hover: { 
+      scale: 1.1,
+      rotate: [0, 10, -10, 0],
+      transition: { 
+        duration: 0.6,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       {/* Hero Section */}
@@ -148,19 +160,36 @@ export default function AllServices() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+                className="relative bg-white rounded-2xl p-8 shadow-lg group overflow-hidden"
               >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600">
+                {/* Animated border gradient */}
+                <motion.div 
+                  className="absolute inset-0 rounded-2xl p-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                >
+                  <div className="w-full h-full bg-white rounded-xl"></div>
+                </motion.div>
+                
+                <div className="relative z-10">
+                <div className="flex items-start mb-4 space-x-3">
+                  <motion.div 
+                    className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-blue-50"
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: [0, 10, -10, 0],
+                      transition: { 
+                        duration: 0.6,
+                        ease: "easeInOut"
+                      }
+                    }}
+                  >
+                    <span className="text-2xl flex items-center justify-center w-full h-full">{service.icon}</span>
+                  </motion.div>
+                  <h3 className="text-lg font-bold text-gray-900 leading-tight">{service.title}</h3>
+                </div>
+                <p className="text-gray-600 text-justify">
                   {service.description}
                 </p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
