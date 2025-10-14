@@ -156,14 +156,10 @@ export default function TNEService() {
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Approach</h2>
             <div className="prose prose-lg text-gray-600 max-w-4xl">
               <p className="mb-4">
-                We combine deep expertise in international education with a client-focused approach to deliver
-                solutions that drive real value. Our TNE services are designed to enhance your institution's
-                global presence, optimize international partnerships, and solve complex educational challenges.
+                We'll help you navigate the complexities of international education partnerships with our end-to-end TNE support services. We combine deep expertise in international education with a client-focused approach to deliver solutions that drive real value. Our TNE services are designed to enhance your institution's global presence, optimize international partnerships, and solve complex educational challenges.
               </p>
               <p className="mb-0">
-                Whether you're looking to establish a new international presence or strengthen existing
-                partnerships, our team provides the strategic guidance and operational support you need
-                to succeed in today's competitive global education landscape.
+                Whether you're looking to establish a new international presence or strengthen existing partnerships, our team provides the strategic guidance and operational support you need to succeed in today's competitive global education landscape.
               </p>
             </div>
           </motion.div>
@@ -187,7 +183,7 @@ export default function TNEService() {
             Ready to Expand Your Global Reach?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss how our TNE services can help you achieve your international education goals
+            Let&apos;s discuss how our TNE services can help you achieve your international education goals
           </p>
           <Link
             href="/contact"

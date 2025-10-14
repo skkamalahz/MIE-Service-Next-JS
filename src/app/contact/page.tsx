@@ -119,7 +119,7 @@ const ContactPage = () => {
             transition={{ delay: 0.3 }}
             className="text-xl max-w-2xl"
           >
-            We'd love to hear from you. Contact us today and our team will get back to you as soon as possible.
+            We&apos;d love to hear from you. Contact us today and our team will get back to you as soon as possible.
           </motion.p>
         </div>
       </motion.div>
