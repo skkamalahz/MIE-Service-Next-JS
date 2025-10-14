@@ -182,7 +182,7 @@ export default function AllServices() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Ready to Transform Your Education Services?
           </h2>
-          <p className="text-gray-600">Discover our comprehensive range of services designed to support you at every step of your educational journey. We&apos;re here to help you achieve your academic and career goals.</p>
+          <p className="text-white mb-8">Discover our comprehensive range of services designed to support you at every step of your educational journey. We&apos;re here to help you achieve your academic and career goals.</p>
           <Link
             href="/contact"
             className="inline-flex items-center px-8 py-4 text-lg font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
