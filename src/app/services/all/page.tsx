@@ -170,7 +170,7 @@ export default function AllServices() {
                 </motion.div>
                 
                 <div className="relative z-10">
-                <div className="flex items-start mb-4 space-x-3">
+                <div className="flex items-center mb-4 space-x-3">
                   <motion.div 
                     className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-blue-50"
                     whileHover={{ 

@@ -103,16 +103,19 @@ export default function TNEService() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 relative">
+      <section className="relative py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-3xl font-bold text-center text-gray-900 mb-12"
+            className="text-center mb-12"
           >
-            Our TNE Solutions
-          </motion.h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Our TNE Solutions
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+          </motion.div>
 
           <motion.div
             variants={staggerContainer}
@@ -127,20 +130,20 @@ export default function TNEService() {
                 className="relative bg-white rounded-2xl p-8 shadow-lg group overflow-hidden"
               >
                 {/* Animated border gradient */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 rounded-2xl p-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 >
                   <div className="w-full h-full bg-white rounded-xl"></div>
                 </motion.div>
-                
+
                 <div className="relative z-10">
-                  <div className="flex items-start mb-4 space-x-3">
-                    <motion.div 
+                  <div className="flex items-center mb-4 space-x-3">
+                    <motion.div
                       className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-blue-50"
-                      whileHover={{ 
+                      whileHover={{
                         scale: 1.1,
                         rotate: [0, 10, -10, 0],
-                        transition: { 
+                        transition: {
                           duration: 0.6,
                           ease: "easeInOut"
                         }
@@ -161,21 +164,24 @@ export default function TNEService() {
       </section>
 
       {/* Approach Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12"
+            className="bg-white rounded-2xl p-8 shadow-lg"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Approach</h2>
-            <div className="prose prose-lg text-gray-600 max-w-4xl">
-              <p className="mb-4">
-                We'll help you navigate the complexities of international education partnerships with our end-to-end TNE support services. We combine deep expertise in international education with a client-focused approach to deliver solutions that drive real value. Our TNE services are designed to enhance your institution's global presence, optimize international partnerships, and solve complex educational challenges.
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Approach</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+            </div>
+            <div className="prose prose-lg text-gray-600 max-w-4xl mx-auto">
+              <p className="mb-6">
+                We'll help you navigate the complexities of international education partnerships with our end-to-end TNE support services. We combine deep expertise in international education with a client-focused approach to deliver solutions that drive real value.
               </p>
-              <p className="mb-0">
+              <p className="mb-10">
                 Whether you're looking to establish a new international presence or strengthen existing partnerships, our team provides the strategic guidance and operational support you need to succeed in today's competitive global education landscape.
               </p>
             </div>
@@ -189,14 +195,14 @@ export default function TNEService() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2, duration: 0.8 }}
-        className="py-20 bg-gradient-to-br from-blue-600 to-indigo-800 relative overflow-hidden"
+        className="py-24 bg-gradient-to-br from-blue-600 to-indigo-800 relative overflow-hidden"
       >
         <div className="absolute inset-0 opacity-20" style={{
           backgroundImage: "url('/grid.svg')",
           backgroundPosition: 'center'
         }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">
             Ready to Expand Your Global Reach?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
