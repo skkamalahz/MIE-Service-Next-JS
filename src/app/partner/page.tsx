@@ -161,36 +161,33 @@ export default function Partner() {
 
           {/* Partner Logos */}
           <motion.div 
-            className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3 max-w-6xl mx-auto"
+            className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3"
             variants={containerVariants}
           >
             {partners.map((partner, index) => (
               <motion.div 
                 key={index} 
-                className="flex flex-col items-center h-full min-h-[360px]"
+                className="flex flex-col items-center"
                 variants={itemVariants}
                 whileHover={{ y: -5, transition: { duration: 0.3 } }}
               >
                 <motion.div 
-                  className="relative w-full h-64 bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 flex items-center justify-center flex-1"
+                  className="relative w-64 h-32 bg-white rounded-xl shadow-lg p-4 hover:shadow-2xl transition-all duration-300"
                   whileHover={{ 
                     scale: 1.03,
                     boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
                   }}
                 >
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={partner.logo}
-                      alt={`${partner.name} logo`}
-                      fill
-                      className="object-contain transition-transform duration-300 p-2"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
-                    />
-                  </div>
+                  <Image
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    fill
+                    className="object-contain transition-transform duration-300 p-2"
+                    priority
+                  />
                 </motion.div>
                 <motion.h3 
-                  className="mt-4 text-xl font-semibold text-gray-900 text-center"
+                  className="mt-4 text-xl font-semibold text-gray-900"
                   whileHover={{ color: '#2563eb' }}
                 >
                   {partner.name}
