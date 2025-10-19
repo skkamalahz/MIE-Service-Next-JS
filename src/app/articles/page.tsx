@@ -41,13 +41,14 @@ const item = {
 } as const;
 
 const cardHover = {
+  initial: { y: 0, scale: 1 },
   hover: {
-    y: -5,
+    y: -8,
+    scale: 1.02,
     transition: { 
-      duration: 0.2,
       type: 'spring',
-      stiffness: 200,
-      damping: 10
+      stiffness: 300,
+      damping: 15
     }
   }
 } as const;
@@ -213,11 +214,12 @@ export default function Articles() {
                 variants={item}
               >
                 <motion.article
-                  className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
+                  className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col will-change-transform"
                   layout
+                  initial="initial"
                   variants={cardHover}
                   whileHover="hover"
-                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                 >
                   <Link href={`/articles/${article.slug}`} className="h-full flex flex-col">
                     <div className="relative h-48 bg-gray-100 overflow-hidden">
