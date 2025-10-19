@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Types
 type Article = {
@@ -29,35 +29,25 @@ const container = {
 
 const item = {
   hidden: { y: 20, opacity: 0 },
-  show: {
+  show: (i: number) => ({
     y: 0,
     opacity: 1,
     transition: {
       duration: 0.5,
-      ease: [0.4, 0, 0.2, 1],
+      ease: [0.4, 0, 0.2, 1] as const,
     },
-  },
-  hover: {
-    y: -5,
-    transition: { duration: 0.3 },
-  },
-} as const;
-
-const fadeInUp = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.4, 0, 0.2, 1],
-    },
-  },
+  }),
 } as const;
 
 export default function Articles() {
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
+
   // Enhanced articles data with additional fields
   const articles: Article[] = [
     {
@@ -128,7 +118,7 @@ export default function Articles() {
 
   // Get unique categories
   const categories = ['All', ...new Set(articles.map(article => article.category))];
-  
+
   // Filter articles based on selected category
   const filteredArticles = activeCategory === 'All' 
     ? articles 
@@ -173,8 +163,9 @@ export default function Articles() {
         <motion.div 
           className="flex flex-wrap justify-center gap-2 mb-12"
           variants={container}
-          initial="hidden"
-          animate="show"
+          initial={false}
+          animate={isMounted ? "show" : "hidden"}
+          key="category-tabs"
         >
           {categories.map((category) => (
             <motion.button
@@ -196,70 +187,70 @@ export default function Articles() {
         {/* Articles Grid */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={container}
-          initial="hidden"
-          animate="show"
+          key={activeCategory}
         >
           <AnimatePresence mode="wait">
             {filteredArticles.map((article, index) => (
-              <motion.article
+              <motion.div
                 key={article.slug}
-                className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
+                custom={index}
+                initial="hidden"
+                animate={isMounted ? "show" : "hidden"}
+                exit="hidden"
                 variants={item}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                whileHover={{ y: -5 }}
               >
-                <Link href={`/articles/${article.slug}`} className="block h-full">
-                  <div className="relative h-48 bg-gray-100 overflow-hidden">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
-                        {article.category}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6 flex flex-col h-full">
-                    <div className="flex-1">
-                      <div className="flex items-center text-sm text-gray-500 mb-3">
-                        <span>{article.date}</span>
-                        <span className="mx-2">•</span>
-                        <span>{article.readTime}</span>
+                <motion.article
+                  className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
+                  layout
+                  whileHover={{ y: -5 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                >
+                  <Link href={`/articles/${article.slug}`} className="h-full flex flex-col">
+                    <div className="relative h-48 bg-gray-100 overflow-hidden">
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 3} // Only prioritize first 3 images for better LCP
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <div className="flex items-center">
+                          <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
+                            {article.category}
+                          </span>
+                          <span className="ml-2 text-white text-sm">{article.readTime}</span>
+                        </div>
                       </div>
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
                       <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-3">
                         {article.title}
                       </h2>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
-                        Read more
-                        <svg
-                          className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
+                      <div className="mt-auto pt-4 border-t border-gray-100">
+                        <div className="flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
+                          Read more
+                          <svg
+                            className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.article>
+                  </Link>
+                </motion.article>
+              </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
