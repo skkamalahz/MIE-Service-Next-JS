@@ -37,10 +37,18 @@ const item = {
       delay: i * 0.1,
       ease: [0.4, 0, 0.2, 1] as const,
     },
-  }),
+  })
+} as const;
+
+const cardHover = {
   hover: {
     y: -5,
-    transition: { duration: 0.2 }
+    transition: { 
+      duration: 0.2,
+      type: 'spring',
+      stiffness: 200,
+      damping: 10
+    }
   }
 } as const;
 
@@ -207,8 +215,7 @@ export default function Articles() {
                 <motion.article
                   className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
                   layout
-                  variants={item}
-                  custom={index}
+                  variants={cardHover}
                   whileHover="hover"
                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 >
