@@ -34,9 +34,14 @@ const item = {
     opacity: 1,
     transition: {
       duration: 0.5,
+      delay: i * 0.1,
       ease: [0.4, 0, 0.2, 1] as const,
     },
   }),
+  hover: {
+    y: -5,
+    transition: { duration: 0.2 }
+  }
 } as const;
 
 export default function Articles() {
@@ -160,14 +165,8 @@ export default function Articles() {
       {/* Articles Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Category Filter */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-2 mb-12"
-          variants={container}
-          initial={false}
-          animate={isMounted ? "show" : "hidden"}
-          key="category-tabs"
-        >
-          {categories.map((category) => (
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {categories.map((category, index) => (
             <motion.button
               key={category}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -175,6 +174,9 @@ export default function Articles() {
                   ? 'bg-blue-600 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
+              initial="hidden"
+              animate={isMounted ? "show" : "hidden"}
+              custom={index}
               variants={item}
               whileHover="hover"
               onClick={() => setActiveCategory(category)}
@@ -182,14 +184,17 @@ export default function Articles() {
               {category}
             </motion.button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Articles Grid */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={container}
+          initial="hidden"
+          animate={isMounted ? "show" : "hidden"}
           key={activeCategory}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {filteredArticles.map((article, index) => (
               <motion.div
                 key={article.slug}
@@ -202,7 +207,9 @@ export default function Articles() {
                 <motion.article
                   className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
                   layout
-                  whileHover={{ y: -5 }}
+                  variants={item}
+                  custom={index}
+                  whileHover="hover"
                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 >
                   <Link href={`/articles/${article.slug}`} className="h-full flex flex-col">
