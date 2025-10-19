@@ -142,7 +142,8 @@ export default function Articles() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
       <motion.section 
-        className="relative py-24 bg-gradient-to-br from-[#02226f] to-blue-800 overflow-hidden isolate"
+        className="relative py-24 bg-gradient-to-br from-[#02226f] to-blue-800 overflow-hidden"
+        style={{ zIndex: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -172,7 +173,7 @@ export default function Articles() {
       </motion.section>
 
       {/* Articles Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" style={{ zIndex: 1 }}>
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((category, index) => (
