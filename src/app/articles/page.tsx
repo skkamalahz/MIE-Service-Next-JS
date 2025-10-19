@@ -1,114 +1,283 @@
 'use client';
 
-import Image from "next/image";
-import Link from "next/link";
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+
+// Types
+type Article = {
+  title: string;
+  image: string;
+  slug: string;
+  category: string;
+  date: string;
+  readTime: string;
+};
+
+// Animation variants
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      when: 'beforeChildren',
+    },
+  },
+} as const;
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+  hover: {
+    y: -5,
+    transition: { duration: 0.3 },
+  },
+} as const;
+
+const fadeInUp = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+} as const;
 
 export default function Articles() {
-  const articles = [
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  
+  // Enhanced articles data with additional fields
+  const articles: Article[] = [
     {
       title: "Student life at Bangor University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/73195146_student-bangor.webp",
-      slug: "student-life-at-bangor-university"
+      slug: "student-life-at-bangor-university",
+      category: "Student Life",
+      date: "Oct 15, 2025",
+      readTime: "5 min read"
     },
     {
       title: "Postgraduate study at Bangor University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/39419689_Postgraduate%20study%20at%20Bangor%20University.webp",
-      slug: "postgraduate-study-at-bangor-university"
+      slug: "postgraduate-study-at-bangor-university",
+      category: "Postgraduate",
+      date: "Oct 12, 2025",
+      readTime: "6 min read"
     },
     {
       title: "Undergraduate study at Bangor University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/53219336_bangor%202.webp",
-      slug: "undergraduate-study-at-bangor-university"
+      slug: "undergraduate-study-at-bangor-university",
+      category: "Undergraduate",
+      date: "Oct 10, 2025",
+      readTime: "4 min read"
     },
     {
       title: "Why study at Bangor University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/83526309_bangor.webp",
-      slug: "why-study-at-bangor-university"
+      slug: "why-study-at-bangor-university",
+      category: "University Guide",
+      date: "Oct 8, 2025",
+      readTime: "7 min read"
     },
     {
       title: "Why choose the University of Hull London",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/69563148_university%20of%20hull.jpg",
-      slug: "why-choose-the-university-of-hull-london"
+      slug: "why-choose-the-university-of-hull-london",
+      category: "University Guide",
+      date: "Oct 5, 2025",
+      readTime: "5 min read"
     },
     {
       title: "What to expect: International students living at Keele University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/21796061_International%20students%20living%20at%20Keele%20University.webp",
-      slug: "international-students-living-at-keele-university"
+      slug: "international-students-living-at-keele-university",
+      category: "Student Life",
+      date: "Oct 3, 2025",
+      readTime: "8 min read"
     },
     {
       title: "Academic life at Keele University",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/35592875_Academic%20life%20at%20keele.webp",
-      slug: "academic-life-at-keele-university"
+      slug: "academic-life-at-keele-university",
+      category: "Academics",
+      date: "Oct 1, 2025",
+      readTime: "6 min read"
     },
     {
       title: "Why choose Keele University?",
       image: "https://s3.eu-west-2.amazonaws.com/mie-services.com/content_images/68046489_keele-uni.webp",
-      slug: "why-choose-keele-university"
+      slug: "why-choose-keele-university",
+      category: "University Guide",
+      date: "Sep 28, 2025",
+      readTime: "5 min read"
     }
   ];
 
+  // Get unique categories
+  const categories = ['All', ...new Set(articles.map(article => article.category))];
+  
+  // Filter articles based on selected category
+  const filteredArticles = activeCategory === 'All' 
+    ? articles 
+    : articles.filter(article => article.category === activeCategory);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Articles & Resources</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover insights about our partner universities, student life, and educational opportunities.
-          </p>
+      {/* Hero Section */}
+      <motion.section 
+        className="relative py-24 bg-gradient-to-br from-[#02226f] to-blue-800 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20"></div>
         </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Insights & Articles
+          </motion.h1>
+          <motion.p
+            className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Stay updated with the latest news, tips, and guides on international education and student services.
+          </motion.p>
+        </div>
+      </motion.section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => (
-            <article key={index} className="group">
-              <div className="relative">
-                {/* Background blur effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-red-500 rounded-2xl blur opacity-20 transition-opacity duration-300 group-hover:opacity-30" />
-                
-                <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl h-full flex flex-col">
-                  <div className="relative h-48 overflow-hidden flex-shrink-0">
+      {/* Articles Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Category Filter */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-2 mb-12"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {categories.map((category) => (
+            <motion.button
+              key={category}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === category
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+              variants={item}
+              whileHover="hover"
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Articles Grid */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          <AnimatePresence mode="wait">
+            {filteredArticles.map((article, index) => (
+              <motion.article
+                key={article.slug}
+                className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
+                variants={item}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ y: -5 }}
+              >
+                <Link href={`/articles/${article.slug}`} className="block h-full">
+                  <div className="relative h-48 bg-gray-100 overflow-hidden">
                     <Image
                       src={article.image}
                       alt={article.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
+                        {article.category}
+                      </span>
+                    </div>
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h2 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300 flex-grow">
-                      <Link href={article.slug} className="hover:underline line-clamp-3" title={article.title}>
+                  <div className="p-6 flex flex-col h-full">
+                    <div className="flex-1">
+                      <div className="flex items-center text-sm text-gray-500 mb-3">
+                        <span>{article.date}</span>
+                        <span className="mx-2">•</span>
+                        <span>{article.readTime}</span>
+                      </div>
+                      <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-3">
                         {article.title}
-                      </Link>
-                    </h2>
-                    <div className="mt-auto">
-                      <Link
-                        href={article.slug}
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300"
-                      >
+                      </h2>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <div className="flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
                         Read more
                         <svg
-                          className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+                          className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1"
                           fill="none"
-                          stroke="currentColor"
                           viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+                          stroke="currentColor"
                         >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                            d="M9 5l7 7-7 7"
                           />
                         </svg>
-                      </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+                </Link>
+              </motion.article>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Load More Button */}
+        {filteredArticles.length > 6 && (
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <button className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              Load More Articles
+            </button>
+          </motion.div>
+        )}
+      </section>
     </div>
   );
 }
